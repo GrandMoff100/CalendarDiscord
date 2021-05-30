@@ -31,7 +31,7 @@ MANIFEST
 .replit
 
 # Development
-calendars.yml
+config.yml
 
 # Poetry
 poetry.lock
