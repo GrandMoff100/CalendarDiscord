@@ -1,5 +1,5 @@
 from icalevents.icalevents import events as icalevents
-from datetime import timedelta
+from datetime import timedelta, datetime
 import yaml as yml
 import dhooks
 
@@ -26,24 +26,22 @@ class WebCalendar:
             fix_apple=fix_apple
         )
     
-    def format_timedelta(timedelta):
-        fields = [
-            'days',
-            'hours',
-            'minutes'
-        ]
-
-        return ', '.join(['{} {}'.format(
-            getattr(timedelta, field),
-            field
-        ) for field in fields])
+    def format_timedelta(delta):
+        hours = (delta.seconds - delta.seconds % 3600)
+        fields = {
+            'Days': delta.days,
+            'Hours': hours // 3600,
+            'Minutes': (delta.seconds - hours - delta.seconds % 60) // 60
+        }
+        return ', '.join(['{} {}'.format(field, data) for field, data in fields.items() if data > 0])
+        
 
     def format_event_content(self, event):
         context = {
             'calendar': self.name,
             'title': event.summary,
             'description': event.description,
-            'time_until': WebCalendar.format_timedelta(event.time_until())
+            'time_until': WebCalendar.format_timedelta(event.time_left())
         }
         with open('webhook-template.md', 'r') as f:
             read = f.read()
@@ -61,9 +59,13 @@ class WebCalendar:
 if __name__ == '__main__':
     with open('config.yml', 'r') as f:
         config = yml.safe_load(f)
-    timedeltas = [timedelta(**delta) for delta in config.get('alert_time_remaining', [])]
     
-    for v in config.get('calendars', {}).values():
+    alert_ats = [timedelta(**delta) for delta in config.get('alert_time_remaining', [])]
+    
+    for v in config.get('calendars', []):
         cal = WebCalendar.from_dict(v)
         for event in cal.events:
-            pass
+            for alert_at in alert_ats:
+                now = datetime.now()
+                if now + timedelta(minutes=6) >= now + alert_at >= now:
+                    cal.send(event)
