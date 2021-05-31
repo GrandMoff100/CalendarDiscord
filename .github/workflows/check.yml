@@ -1,7 +1,7 @@
 name: Check for new events
 
 on:
-  scheduke:
+  schedule:
     - cron: '*/6 * * * *'
 
 jobs:
