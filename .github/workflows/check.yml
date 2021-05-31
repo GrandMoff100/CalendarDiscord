@@ -1,0 +1,19 @@
+name: Check for new events
+
+on:
+  scheduke:
+    - cron: '*/6 * * * *'
+
+jobs:
+  check_for_events:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Run check script
+        run: |
+          python scripts/entry.py

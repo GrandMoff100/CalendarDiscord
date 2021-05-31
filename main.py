@@ -65,7 +65,7 @@ if __name__ == '__main__':
     for v in config.get('calendars', []):
         cal = WebCalendar.from_dict(v)
         for event in cal.events:
-            for alert_at in alert_ats:
-                now = datetime.now()
-                if now + timedelta(minutes=6) >= now + alert_at >= now:
-                    cal.send(event)
+            #for alert_at in alert_ats:
+            #    now = datetime.now()
+            #    if now + timedelta(minutes=6) >= now + alert_at >= now:
+            cal.send(event)

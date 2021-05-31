@@ -30,9 +30,6 @@ MANIFEST
 # Replit.com IDE
 .replit
 
-# Development
-config.yml
-
 # Poetry
 poetry.lock
 pyproject.toml

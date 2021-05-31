@@ -1,0 +1,13 @@
+calendars:
+    - name: 'Schoology Calendar'
+      calendar_url: webcal://learn.sowashco.org/calendar/feed/ical/1622382584/c15d79ff742ee6547561b275ae18160e/ical.ics
+      webhook_options:
+        avatar_url: https://d1csarkz8obe9u.cloudfront.net/posterpreviews/calendar-clipart-logo-design-template-9a3d7bbcf620587d4b74313072040475_screen.jpg?ts=1611246431
+        username: 'Your Calendar'
+      webhook_url: 'https://discord.com/api/webhooks/848663260844916767/biv15lVowUyM6LBIpK5LhpswO0gnJseKg4Sp04nIWkaZaPRvki_-7MLnHg9m4g6xivnH'
+alert_until_remaining:
+    - minutes: 5
+    - minutes: 30
+      hours: 1
+    - days: 1
+  
