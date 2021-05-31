@@ -16,4 +16,4 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run check script
         run: |
-          python scripts/entry.py
+          python main.py
